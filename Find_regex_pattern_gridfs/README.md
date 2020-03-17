@@ -2,7 +2,7 @@
 ##Intro
 **Biotools** is an ongoing project at Ramapo College of NJ of the Bioinformatics program. It is headed-up by Dr. Bagga and Dr. Frees. The purpose of the project is to create a customized database of Chromosome sequences, mRNA, etc.
 
-This folder contains another project of additional self-assigned programs that I wrote to keep the skills I learned intact.
+**This folder contains another project of additional self-assigned programs that I wrote to keep the skills I learned intact.**
 
 This self-assigned project is to find nucleotides via search string in the GridFS collection in a new "Chromosome" Mongo database. This database is not part of the original Biotools project. Data were initially loaded via mongofiles module that created a GridFS style database. 
 
