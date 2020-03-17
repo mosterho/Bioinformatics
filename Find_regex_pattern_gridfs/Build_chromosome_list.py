@@ -25,7 +25,7 @@ class cls_all_chromosome:
         self.searchpattern = arg_searchpattern
         self.verbose = arg_verbose
         #working_cls_chromosome_object = []  # can revivie this if appending multiple chromosomes to one object
-        if(self.verbose == 2):
+        if(self.verbose >= 2):
             print(__name__, ' called from: ', sys.argv[0], ' ', self.chromosome)
 
         ## loop though chromosome numbers passed in, append to the working class
@@ -35,6 +35,7 @@ class cls_all_chromosome:
             ## ideally it would be nice to keep each chromosome object available, but
             ## doing an append to the working_cls_chromosome_object greatly increases memory pressure
             ## perform search on individual wrk_chromosome class objects
+            
             #working_cls_chromosome_object.append(wrk_chromosome)
 
             # the nucleotides in the class are in a byte list (i.e., multiple lines and look like b'...')

@@ -31,7 +31,7 @@ class cls_chromosome_object:
         grid  = gridfs.GridFSBucket(db)
 
         ##
-        if(self.cls_verbose == 2):
+        if(self.cls_verbose >= 2):
             print(__name__, ' called from: ', sys.argv[0], ' ', 'print ID/cursor object for grid.find({"filename":' + self.cls_filename + '}): ')
             print(__name__, ' called from: ', sys.argv[0], ' ', grid.find({"filename":self.cls_filename}))
         ## Retrieve the data from GridFS basedon taxon_chromosome#
@@ -40,14 +40,14 @@ class cls_chromosome_object:
             # Create a list of byte data from the file/bucket, SPLIT off newline character
             # but keep the lines separate
             dataread_actual_bytelist = dataread_actual.split(b'\n')
-            if(self.cls_verbose == 2):
+            if(self.cls_verbose >= 2):
                 print('\nuse FOR loop to print the first 5 lines of the list')
                 for i in range(5):
                     print(dataread_actual_bytelist[i])
             # Use POP to remove the first line (this contains the >gi|, description, etc.)
             # and keep the nucleotide data
             self.chromosome_title = dataread_actual_bytelist.pop(0)
-            if(self.cls_verbose == 2):
+            if(self.cls_verbose >= 2):
                 print('\nprint dataread_actual_firstline - should be first line of chromosome file')
                 print(self.chromosome_title)
                 print('print dataread_actual_list after pop - should be only nucleotides')

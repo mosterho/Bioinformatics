@@ -18,7 +18,7 @@ class cls_overall_container:
             self.chromosome.append('chromosome' + str(cls_loop))
         self.searchpattern = arg_searchpattern
         self.verbose = arg_verbose
-        if(self.verbose in (1,2)):
+        if(self.verbose >= 1):
             print(__name__, ' called from: ', sys.argv[0], '\nTaxon is: ', self.taxon, '\nchromosome(s): ', self.chromosome, '\nSearch Pattern: ', self.searchpattern)
 
     def fnc_validate_searchpattern(self):
@@ -45,13 +45,13 @@ if (__name__ == "__main__"):
     wrk_parser.add_argument("-v", "--verbose", help="Specifiy the level of vebose output, valid values are -v and -vv", action="count", default=0)
     rslt_parser = wrk_parser.parse_args()
 
-    if(rslt_parser.verbose == 2):
+    if(rslt_parser.verbose >= 2):
         print(__name__, ' ', sys.argv[0], ' ', 'Result of the parser is: ', rslt_parser)
 
     ## Build class that contains overall info
     wrk_container = cls_overall_container(rslt_parser.Taxon, rslt_parser.chromosome, rslt_parser.SearchPattern, rslt_parser.verbose)
     wrk_valid_searchpattern = wrk_container.fnc_validate_searchpattern()
-    if(rslt_parser.verbose == 2):
+    if(rslt_parser.verbose >= 2):
         print(__name__, ' called from: ', sys.argv[0], ' ', 'Result of the creating container is: ', wrk_container)
 
     ## Build the chromosome list -- this will contain all info (taxon, some details about chromosome, search pattern)
