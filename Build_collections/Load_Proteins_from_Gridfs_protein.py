@@ -8,8 +8,8 @@ import gridfs, re
 
 def fnc_writedata(arg_writedata, arg_gi, arg_ref, arg_description):
     AA_encoded = arg_writedata.encode()
-    fs_forwrite.insert_one({"Taxon":9606, "Organism":"Homo sapiens", "GI":arg_gi, "ref": arg_ref, "Description":arg_description, "Amino_acids":AA_encoded})
-    #print("GI ", arg_gi, "ref ", arg_ref, "Description ", arg_description)
+    fs_forwrite.insert_one({"Taxon":"9606", "Organism":"Homo sapiens", "GI":arg_gi, "ref": arg_ref, "Description":arg_description, "Amino_acids":AA_encoded})
+    print("GI ", arg_gi, "ref ", arg_ref, "Description ", arg_description)
 
 
 client = MongoClient('mongodb')
@@ -26,7 +26,7 @@ first_read = False
 
 for fs_find in fs_forread.find({}):
     fs_read = fs_find.read()
-    print('Begin writing to Protein file... )
+    print('Begin writing to Protein file... ')
     #
     fs_read_decode = fs_read.decode()
     fs_read_decode_splits = fs_read_decode.split("\n")
@@ -37,14 +37,15 @@ for fs_find in fs_forread.find({}):
             else:
                 first_read = True
             #wrk_fieldbreak = re.findall('(?<=[|]).*?(?=[|])', x_read)
-            wrk_fieldbreak  = re.findall('(?<=[|]).*?(?=[|])', x_read, re.DOTALL)
-            wrk_description = re.findall('([^|]*)$', x_read)
+            #wrk_fieldbreak  = re.findall('(?<=[|]).*?(?=[|])', x_read, re.DOTALL)
+            #wrk_description = re.findall('([^|]*)$', x_read)
+            wrk_fieldbreak = x_read.split('|')
             #print('fieldbreak: ', wrk_fieldbreak, ' ', wrk_description)
-            gi_nbr = int(wrk_fieldbreak[0])
-            ref_abbrev = wrk_fieldbreak[2]
-            description = wrk_description[0][1:]
+            gi_nbr = (wrk_fieldbreak[1])
+            ref_abbrev = wrk_fieldbreak[3]
+            description = wrk_fieldbreak[4][1:]
             write_data = x_read
         else:
             write_data += x_read
     fnc_writedata(write_data, gi_nbr, ref_abbrev, description)
-    print('Finished writing to Protein file... )
+    print('Finished writing to Protein file... ')

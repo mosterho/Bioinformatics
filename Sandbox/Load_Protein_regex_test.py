@@ -5,11 +5,13 @@ import re
 
 search_this = '>gi|53828740|ref|NP_001005484.1| olfactory receptor 4F5 [Homo sapiens]'
 print(search_this)
-wrk_fieldbreak  = re.findall('(?<=[|]).*?(?=[|])', search_this, re.DOTALL)
+wrk_fieldbreak  = re.findall('(?<=[|]).+(?=[|])', search_this, re.DOTALL)
 print('fieldbreak: ', wrk_fieldbreak)
 wrk_fieldbreak  = re.findall('([^|]*)$', search_this)
 print('fieldbreak: ', wrk_fieldbreak)
 wrk_fieldbreak  = re.findall('(\w)', search_this)
+print('fieldbreak: ', wrk_fieldbreak)
+wrk_fieldbreak  = search_this.split('|')
 print('fieldbreak: ', wrk_fieldbreak)
 
 
