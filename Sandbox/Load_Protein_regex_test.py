@@ -14,6 +14,13 @@ print('fieldbreak: ', wrk_fieldbreak)
 wrk_fieldbreak  = search_this.split('|')
 print('fieldbreak: ', wrk_fieldbreak)
 
+search_this = '>NP_000005.2 alpha-2-macroglobulin isoform a precursor [Homo sapiens]'
+wrk_fieldbreak  = re.findall(r'(?<=[>])\w+', search_this)
+print('fieldbreak2: ', wrk_fieldbreak)
+wrk_fieldbreak  = re.findall(r'(?<=[>])\w+[.]\n', search_this)
+print('fieldbreak2: ', wrk_fieldbreak)
+wrk_fieldbreak  = re.findall(r'(?<=[.])(?<=[1-9])*.+$', search_this)
+print('fieldbreak2: ', wrk_fieldbreak)
 
 #>gi|53828740|ref|NP_001005484.1| olfactory receptor 4F5 [Homo sapiens]
 #>gi|1034563939|ref|XP_016858498.1| PREDICTED: uncharacterized protein LOC102725121 isoform X1 [Homo sapiens]
