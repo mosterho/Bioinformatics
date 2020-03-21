@@ -22,7 +22,7 @@ fs          = gridfs.GridFSBucket(db)
 wrk_tag = False
 wrk_filename = ''
 wrk_data = ''
-pattern = re.compile(r'>NC_0000.+?(?=\n>)', re.DOTALL)
+pattern = re.compile(r'>.+?(?<=\n>)', re.DOTALL)
 start_time = datetime.now()
 print('Starting: ', start_time)
 
@@ -36,13 +36,15 @@ print('dataread from read() is: ', dataread[:1000], 'at: ', datetime.now())
 # and return a tuple of strings found
 x_decoded = dataread.decode()
 print('x_decoded: ', x_decoded[:1000])
-match_object = re.findall(pattern, x_decoded)
+#match_object = re.findall(pattern, x_decoded)
+match_object = x_decoded.split('>')
 for new_list in match_object:
-    #print('New_list match object: ', new_list)
-    wrk_filename = new_list[1:10]
-    wrk_dataforwrite = new_list.encode()
-    print('File name: ', wrk_filename, '\ndata: ', wrk_dataforwrite[:100])
-    fs_forwrite.put(wrk_dataforwrite, disable_md5 = True, filename=wrk_filename)
+    if new_list != '':
+        #print('New_list match object: ', new_list)
+        wrk_filename = new_list[0:9]
+        wrk_dataforwrite = new_list.encode()
+        print('File name: ', wrk_filename, '\ndata: ', wrk_dataforwrite[:100])
+        fs_forwrite.put(wrk_dataforwrite, disable_md5 = True, filename=wrk_filename)
 
 end_time = datetime.now()
 print('Finished at: ', end_time, '   total time: ', end_time-start_time)
