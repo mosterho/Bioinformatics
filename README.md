@@ -11,7 +11,7 @@ Finally Python programs are written to read the GridFS collections/chunks and cr
 
 ##technical specs
 ###Programing Folder Structure
-There are currently six folders:
+There are six folders:
 1. Build_collections: this contains the Python programs that create collections in the Mongo database.
 2. Find_regex_pattern_gridfs: this contains Python programs utilizing the new Mongo database collections to perform REGEX finds of nucleotide data. thiis is based on the "Nucleotide_search" folder (see below).
 3. HWtranslatereadingframe: this contains Perl programs, one is the original program from the Ramapo college Perl scripting class, the other is modified to use a genbank file rather than a text file, and do a REGEX search that is uppercase rather than lowercase.
