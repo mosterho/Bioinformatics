@@ -28,7 +28,7 @@ for fs_find in fs_forread.find({}):
         if(x_read[:1] == ">"):
             if(first_read is True):
                 Nucleotide_encoded = write_data.encode()
-                fs_forwrite.insert_one({"Taxon":9606, "Organism":"Homo sapiens", "accession_nbr":accession_nbr, "gene": gene_abbrev, "Description":description, "Nucleotides":Nucleotide_encoded})
+                fs_forwrite.insert_one({"Taxon":"9606", "Organism":"Homo sapiens", "accession_nbr":accession_nbr, "gene": gene_abbrev, "Description":description, "Nucleotides":Nucleotide_encoded})
                 print('accession: ', accession_nbr, 'gene abbrev: ', gene_abbrev, 'description: ', description)
             else:
                 first_read = True
@@ -37,7 +37,7 @@ for fs_find in fs_forread.find({}):
             for x in gene_abbrev_list:
                 gene_abbrev = x
             description = x_read[13:]
-            write_data = x_read
+            write_data = x_read  # note the use of "=" here and "+=" further down
         else:
             write_data += x_read
     Nucleotide_encoded = write_data.encode()

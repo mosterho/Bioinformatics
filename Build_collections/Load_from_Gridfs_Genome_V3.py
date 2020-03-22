@@ -5,8 +5,7 @@
 # Genome database. Read the "9606_Genome" collection created by
 # the BASH script, write each chromosome as a collection
 # while looping through the fsbucket, catch each instance of ">NC"
-# until the next ">" is read (this will be the changed assemblies)
-# then pick up again at the next ">NC" that is read.
+# until the next ">" is read
 
 from pymongo import MongoClient
 from datetime import datetime, timedelta
@@ -22,7 +21,7 @@ fs          = gridfs.GridFSBucket(db)
 wrk_tag = False
 wrk_filename = ''
 wrk_data = ''
-pattern = re.compile(r'>.+?(?<=\n>)', re.DOTALL)
+#pattern = re.compile(r'>.+?(?<=\n>)', re.DOTALL)
 start_time = datetime.now()
 print('Starting: ', start_time)
 
@@ -32,8 +31,8 @@ dataread = fs_datafind.read()
 
 print('dataread from read() is: ', dataread[:1000], 'at: ', datetime.now())
 
-# use a REGEX "findall" to loop through this single string
-# and return a tuple of strings found
+# use a "split" to loop through this single string
+# and return a list of strings found
 x_decoded = dataread.decode()
 print('x_decoded: ', x_decoded[:1000])
 #match_object = re.findall(pattern, x_decoded)
