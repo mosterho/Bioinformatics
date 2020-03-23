@@ -21,7 +21,6 @@ fs_forread  = gridfs.GridFSBucket(db)
 print('perform "delete_many" on existing protein collection')
 fs_forwrite.delete_many({})
 
-#wrk_accession_break = ''
 first_read = False
 
 for fs_find in fs_forread.find({}):
@@ -36,11 +35,7 @@ for fs_find in fs_forread.find({}):
                 fnc_writedata(write_data, gi_nbr, ref_abbrev, description)
             else:
                 first_read = True
-            #wrk_fieldbreak = re.findall('(?<=[|]).*?(?=[|])', x_read)
-            #wrk_fieldbreak  = re.findall('(?<=[|]).*?(?=[|])', x_read, re.DOTALL)
-            #wrk_description = re.findall('([^|]*)$', x_read)
             wrk_fieldbreak = x_read.split('|')
-            #print('fieldbreak: ', wrk_fieldbreak, ' ', wrk_description)
             gi_nbr = (wrk_fieldbreak[1])
             ref_abbrev = wrk_fieldbreak[3]
             description = wrk_fieldbreak[4][1:]
