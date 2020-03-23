@@ -1,8 +1,6 @@
 ###
 # open NCBI upload files in the Gridfs format
 # write to collections
-# This will create a protein collection in the
-# Genome database.
 
 from pymongo import MongoClient
 import gridfs, re

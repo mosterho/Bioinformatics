@@ -2,6 +2,10 @@
 ## There is no practical application for this program,
 ## other than learning how to write to a GridFS system.
 
+## this will read the multiple refseqgene files uploaded from (originally)
+## the NCBI files. This will combine the 22 files in GridFS format into one file
+## in the Mongo "refseqgene", also in GridFS format.
+
 import sys
 from pymongo import MongoClient
 import gridfs, re

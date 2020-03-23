@@ -34,6 +34,8 @@ for fs_find in fs_forread.find({}):
                 first_read = True
             accession_nbr = x_read[1:10]
             gene_abbrev_list = re.findall('(?<=[(]).+?(?=[)])', x_read)
+            # looks like some entries have two or more gene accession.
+            # For now, find the last entry. May put this in an array in the future.
             for x in gene_abbrev_list:
                 gene_abbrev = x
             description = x_read[13:]
