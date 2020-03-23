@@ -2,6 +2,9 @@
 ## Build a single gene collection
 ## from the refseq NCBI files
 
+## read from the refseqgene files from NCBI, upload to a single
+## "regular" collection refseqgene_file
+
 import sys
 from pymongo import MongoClient
 import gridfs, re
