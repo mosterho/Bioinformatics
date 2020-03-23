@@ -20,7 +20,7 @@ There are six folders:
 6. scripts: contains BASH scripts that copy NCBI fast files into MongoDB GridFS collections.
 
 
-smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-31-28.jpg
+![Screen cap of Studio 3T](smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-31-28.jpg)
 
 smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-33-17.jpg
 
