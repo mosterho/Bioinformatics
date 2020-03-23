@@ -22,8 +22,8 @@ There are six folders:
 
 ![Screen cap of Studio 3T](./Supporting_documentation/Bioinformatics_2020-03-22_13-31-28.jpg)
 
-smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-33-17.jpg
+![Screen cap of Studio 3T](./Supporting_documentation/Bioinformatics_2020-03-22_13-33-17.jpg)
 
-smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-34-24.jpg
+![Screen cap of Studio 3T](./Supporting_documentation/Bioinformatics_2020-03-22_13-34-24.jpg)
 
-smb://dataserver/datascience/Supporting_documentation/Bioinformatics_2020-03-22_13-35-08.jpg
+![Screen cap of Studio 3T](./Supporting_documentation/Bioinformatics_2020-03-22_13-35-08.jpg)
