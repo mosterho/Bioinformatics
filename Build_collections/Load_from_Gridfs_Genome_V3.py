@@ -4,7 +4,7 @@
 # This will create various chromosome collections in the
 # Genome database. Read the "9606_Genome" collection created by
 # the BASH script, write each chromosome as a collection
-# while looping through the fsbucket, catch each instance of ">NC"
+# while looping through the fsbucket, catch each instance of ">"
 # until the next ">" is read
 
 from pymongo import MongoClient
@@ -42,7 +42,8 @@ for new_list in match_object:
         wrk_filename = new_list[0:9]
         wrk_dataforwrite = new_list.encode()
         print('File name: ', wrk_filename, '\ndata: ', wrk_dataforwrite[:100])
-        fs_forwrite.put(wrk_dataforwrite, disable_md5 = True, filename=wrk_filename)
+        #fs_forwrite.put(wrk_dataforwrite, disable_md5 = True, metadata={ }, filename=wrk_filename)
+        fs_forwrite.put(wrk_dataforwrite, metadata={ }, filename=wrk_filename)
 
 end_time = datetime.now()
 print('Finished at: ', end_time, '   total time: ', end_time-start_time)
