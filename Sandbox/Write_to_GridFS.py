@@ -13,8 +13,8 @@ import gridfs
 
 client = MongoClient('mongodb')
 db = client.Genome
+fs          = gridfs.GridFSBucket(db)   # for reading from GridFS
 fs_forwrite = gridfs.GridFS(db)  # for writing to a new file
-fs          = gridfs.GridFSBucket(db)
 
 # build wrk_data similar to a loop decoding data read from a file.
 wrk_data_temp = ''

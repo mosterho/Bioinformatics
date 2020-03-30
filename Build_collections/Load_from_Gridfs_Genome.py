@@ -13,11 +13,11 @@ import gridfs, re
 
 client = MongoClient('mongodb')
 db = client.Genome
-fs_forwrite = gridfs.GridFS(db)  # for writing to a new file
 fs          = gridfs.GridFSBucket(db)
+fs_forwrite = gridfs.GridFS(db)  # for writing to a new file
 
 # begin loop reading through genome colleciton
-wrk_tag = False
+##wrk_tag = False
 wrk_filename = ''
 wrk_data = ''
 #pattern = re.compile(r'>.+?(?<=\n>)', re.DOTALL)

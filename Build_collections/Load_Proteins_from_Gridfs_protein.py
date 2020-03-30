@@ -14,8 +14,8 @@ def fnc_writedata(arg_writedata, arg_gi, arg_ref, arg_description):
 
 client = MongoClient('mongodb')
 db = client.protein
-fs_forwrite = db.protein_file  # for writing to a new file
 fs_forread  = gridfs.GridFSBucket(db)
+fs_forwrite = db.protein_file  # for writing to a new file
 
 ## delete any entries in refseqgene_file before starting
 print('perform "delete_many" on existing protein collection')
@@ -30,6 +30,9 @@ for fs_find in fs_forread.find({}):
     fs_read_decode = fs_read.decode()
     fs_read_decode_splits = fs_read_decode.split("\n")
     for x_read in fs_read_decode_splits:
+        ## if ">" encountered, this is a new document, write previous GI first
+        ## Also Test if this is the first row read from the file ("first_read" flag)
+        ##    set the "first_read" flag to True after first row is read
         if(x_read[:1] == ">"):
             if(first_read is True):
                 fnc_writedata(write_data, gi_nbr, ref_abbrev, description)
@@ -39,8 +42,9 @@ for fs_find in fs_forread.find({}):
             gi_nbr = (wrk_fieldbreak[1])
             ref_abbrev = wrk_fieldbreak[3]
             description = wrk_fieldbreak[4][1:]
-            write_data = x_read
+            write_data = x_read  # Note that this is "=", but non-breaking data read is "+="
         else:
             write_data += x_read
+            ## At end of file, write last document, then continue reading bucket/file
     fnc_writedata(write_data, gi_nbr, ref_abbrev, description)
     print('Finished writing to Protein file... ')

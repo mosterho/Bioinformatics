@@ -2,9 +2,24 @@
 ## There is no practical application for this program,
 ## other than learning how to write to a GridFS system.
 
-## this will read the multiple refseqgene files uploaded from (originally)
-## the NCBI files. This will combine the 22 files in GridFS format into one file
-## in the Mongo "refseqgene", also in GridFS format.
+## this will read the multiple refseqgene files uploaded from
+## the NCBI files. This will combine the 22 files in GridFS format into one
+## GridFS file as "refseqgene".
+
+## to read a GridFS "bucket":
+## 1. create the GridIN object (GridFSBucket spec)
+## 2. perform a "find" (in this case, will read all 22 files)
+## 3. loop through the "find" object,
+## 4. perform a "read" on the "find" (actually a single file) object.
+## 5. perform a "decode" on the binary data to convert it to a string data type
+
+## the following will create a new bucket, no additional steps needed
+## to write to a GridFS bucket (file):
+## 1. create the GridIN object (GridFSBucket spec), but specify a new bucket name ('fs' is default)
+## 2. open a stream to write to the file (open_upload_stream)
+## 3. perform an "encode" to convert string data to binary
+## 4. perform a "write" to the stream object
+## 5. perform a close() to the stream object to ensure all writes are complete
 
 import sys
 from pymongo import MongoClient
@@ -12,11 +27,10 @@ import gridfs, re
 
 client = MongoClient('mongodb')
 db = client.refseqgene
-#fs_forwrite_filesys = gridfs.GridFS(db, collection='refseqgene')
-fs_forwrite = gridfs.GridFSBucket(db, bucket_name='refseqgene')  # for writing to a new file
 fs_forread  = gridfs.GridFSBucket(db)
-fs_forwrite_gridin = fs_forwrite.open_upload_stream('refseqgene')
+fs_forwrite = gridfs.GridFSBucket(db, bucket_name='refseqgene')  # for writing to a new file
 
+fs_forwrite_gridin = fs_forwrite.open_upload_stream('refseqgene')
 first_read = False
 
 for fs_find in fs_forread.find({}):
