@@ -29,6 +29,8 @@ for fs_datafind in fs_forread.find({"filename":"9606_Genome_protein"}):
         # "pop" the first line to retrieve accession and description,
         # this will leave remaining protein data in wrk_protein_data
         wrk_first_line = wrk_protein_data.pop(0)
+        # REGEX is probably better at finding "accession" and
+        # "description"... just trying "find"
         wrk_find = wrk_first_line.find('.')
         wrk_find2 = wrk_first_line.find(' ', wrk_find)
         wrk_accession = wrk_first_line[:wrk_find2]
