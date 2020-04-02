@@ -1,6 +1,10 @@
 
 ## Build a single gene collection
 ## from the refseq NCBI files
+# Example data from NCBI
+#>NP_000005.2 alpha-2-macroglobulin isoform a precursor [Homo sapiens]
+#MGKNKLLHPSLVLLLLVLLPTDASVSGKPQYMVLVPSLLHTETTEKGCVLLSYLNETVTVSASLESVRGNRSLFTDLEAE
+#NDVLHCVAFAVPKSSSNEEVMFLTVQVKGPTQEFKKRTTVMVKNEDSLVFVQTDKSIYKPGQTVKFRVVSMDENFHPLNE
 
 import sys
 from pymongo import MongoClient
