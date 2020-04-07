@@ -13,7 +13,7 @@ import gridfs, re
 def fnc_writedata(arg_writedata, arg_gi, arg_ref, arg_description):
     AA_encoded = arg_writedata.encode()
     fs_forwrite.insert_one({"Taxon":"9606", "Organism":"Homo sapiens", "GI":arg_gi, "ref": arg_ref, "Description":arg_description, "Amino_acids":AA_encoded})
-    print("GI ", arg_gi, "ref ", arg_ref, "Description ", arg_description)
+    #print("GI ", arg_gi, "ref ", arg_ref, "Description ", arg_description)
 
 
 client = MongoClient('mongodb')
