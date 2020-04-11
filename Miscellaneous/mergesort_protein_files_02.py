@@ -1,6 +1,7 @@
 ###
-# open NCBI upload files in the Gridfs format
-# write to collections
+# Compare the protein collections in the "Genome" database against the "protein" database
+# load collections into lists, then move through the lists
+## and compare accession numbers
 
 from pymongo import MongoClient
 
@@ -32,6 +33,7 @@ for fs_protein_cursor in fs_forread_protein.find({},{ "ref": 1}).sort('ref'):
     cls_working.fct_protein_store(fs_protein_cursor.get("ref"))
 
 print('genome counter:', cls_working.genome_count, 'genome list "length":', len(cls_working.genome_acc))
+print('protein counter:', cls_working.protein_count, 'protein list "length":', len(cls_working.protein_acc))
 
 ## Perform initial setup for cursors
 finale = False
@@ -42,7 +44,7 @@ wrk_genome_nbr = 0
 wrk_protein_nbr = 0
 ## Loop through cursors until finale is True
 while finale == False:
-    print('genome cursor:',  cls_working.genome_acc[wrk_genome_nbr], 'protein cursor:', cls_working.protein_acc[wrk_protein_nbr])
+    #print('genome cursor:',  cls_working.genome_acc[wrk_genome_nbr], 'protein cursor:', cls_working.protein_acc[wrk_protein_nbr])
     if(cls_working.genome_acc[wrk_genome_nbr]  == cls_working.protein_acc[wrk_protein_nbr]):
         counter_match += 1
         wrk_genome_nbr += 1
@@ -53,11 +55,11 @@ while finale == False:
     else:
         counter_protein_mismatch += 1
         wrk_protein_nbr += 1
+    ## compare counters to overall lengths of lists, remember that list indexes start at 0
     if(wrk_genome_nbr >= cls_working.genome_count or wrk_protein_nbr >= cls_working.protein_count):
         finale = True
         break
 
-#print('This worked')
 print('matched:', counter_match)
-print('mis-matched genome (genome without matching protein):', counter_genome_mismatch)
-print('mis-matched protein (protein without matching genome):', counter_protein_mismatch)
+print('mis-matched genome (genome without matching protein):', counter_genome_mismatch, ' total count:', wrk_genome_nbr)
+print('mis-matched protein (protein without matching genome):', counter_protein_mismatch, ' total count:', wrk_protein_nbr)

@@ -1,6 +1,9 @@
 ###
-# open NCBI upload files in the Gridfs format
-# write to collections
+# Compare the protein collections in the "Genome" database against the "protein" database
+# Attempt to use cursors with both collections to compare accession numbers.
+
+#### WIP, see version 2 that is complete. This will load the collections
+#### into lists and then use the indexes to move through the accession numbers
 
 from pymongo import MongoClient
 
