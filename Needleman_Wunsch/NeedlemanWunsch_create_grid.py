@@ -41,8 +41,8 @@ class cls_NW_grid:
                 diagonal_value = self.NW_grid[current_row - 1][current_column - 1]
                 top_value = self.NW_grid[current_row - 1][current_column]
                 ## compare current value of individual string location's nucleotides/AA to be compared, are they equal?
+                ## (note the use of -1, because of the difference in grid column/row versus data position)
                 if(self.aa1[current_column - 1] == self.aa2[current_row - 1]):
-                #if(str(class_NW_grid.aa1, current_column - 1, current_column) == str(class_NW_grid.aa2, current_row - 1, current_row)):
                     aa_equivalent = True
                 else:
                     aa_equivalent = False
@@ -63,26 +63,39 @@ class cls_NW_grid:
         ## to find the best possible match
         row = self.len_aa2
         column = self.len_aa1
-        while(row > 0 and column > 0):
+        while(row != 0 or column != 0):
             # determine if left, diagonal or upper grid values have the highest values
-            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column])
+            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
             self.NW_grid[row][column] = 'X'
+            ## Place grid values and their positions in a temporary list,
+            ## then sort the list by value (descending) then position (in case of a tie with value).
             list_grid = [(self.NW_grid[row-1][column-1], 'diagonal'), (self.NW_grid[row-1][column], 'up'), (self.NW_grid[row][column-1], 'left')]
             sorted_LG = sorted(list_grid, key=itemgetter(0), reverse=True)
             sorted(sorted_LG, key=itemgetter(1))
-            ## print "sorted_LG" which basically gives instructions on going through
-            ## the grid in reverse for the best match
-            print(sorted_LG)
-            if(sorted_LG[0][1] == 'up'):
-                row -= 1
-            elif(sorted_LG[0][1] == 'diagonal'):
+            ## Test values, try to go diagonal first, then either up or left
+            if(self.aa1[column - 1] == self.aa2[row - 1] and row >= 2 and column >= 2):
                 row -= 1
                 column -= 1
+                tmp_direction = 'diagonal'
+            elif(sorted_LG[0][1] == 'diagonal' and row >= 2 and column >= 2):
+                row -= 1
+                column -= 1
+                tmp_direction = 'diagonal'
+            elif(sorted_LG[0][1] == 'up' and row >= 2):
+                row -= 1
+                tmp_direction = 'up'
+            elif(sorted_LG[0][1] == 'left' and column >= 2):
+                column -= 1
+                tmp_direction = 'left'
+            if(row == 1 and column == 1):
+                print('Direction:', 'complete')
+                break
             else:
-                column -= 1
+                print('Direction:', tmp_direction)
 
     def fct_print_grid(self, arg_print_full_grid):
         ## print the grid, along with both AA values
+        print('Print the grid, along with both AA values')
         width = len(str(self.len_aa2)) + 2  ## picked +2 just for aesthetics
         for row in range(self.len_aa2 + 1):
             ## print column first, then...
