@@ -41,7 +41,7 @@ class cls_NW_grid:
                 diagonal_value = self.NW_grid[current_row - 1][current_column - 1]
                 top_value = self.NW_grid[current_row - 1][current_column]
                 ## compare current value of individual string location's nucleotides/AA to be compared, are they equal?
-                ## (note the use of -1, because of the difference in grid column/row versus data position)
+                ## (note the use of ""- 1", because of the difference in using grid column/row versus data position)
                 if(self.aa1[current_column - 1] == self.aa2[current_row - 1]):
                     aa_equivalent = True
                 else:
@@ -61,37 +61,45 @@ class cls_NW_grid:
     def fct_grid_walkback(self):
         ## perform the reverse of loading the grid with match/mismatch/gap numbers
         ## to find the best possible match
+        #
+        # set far-right/lower row column positions in grid
         row = self.len_aa2
         column = self.len_aa1
-        while(row != 0 or column != 0):
+        # print far-right/lower row column positions to start before loop
+        print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
+        self.NW_grid[row][column] = 'X'
+        while(row > 1 or column > 1):
             # determine if left, diagonal or upper grid values have the highest values
-            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
-            self.NW_grid[row][column] = 'X'
             ## Place grid values and their positions in a temporary list,
             ## then sort the list by value (descending) then position (in case of a tie with value).
             list_grid = [(self.NW_grid[row-1][column-1], 'diagonal'), (self.NW_grid[row-1][column], 'up'), (self.NW_grid[row][column-1], 'left')]
             sorted_LG = sorted(list_grid, key=itemgetter(0), reverse=True)
             sorted(sorted_LG, key=itemgetter(1))
             ## Test values, try to go diagonal first, then either up or left
+            ## if current AA values match, just use "diagonal" regardless of sorted value
             if(self.aa1[column - 1] == self.aa2[row - 1] and row >= 2 and column >= 2):
-                row -= 1
-                column -= 1
                 tmp_direction = 'diagonal'
             elif(sorted_LG[0][1] == 'diagonal' and row >= 2 and column >= 2):
-                row -= 1
-                column -= 1
                 tmp_direction = 'diagonal'
             elif(sorted_LG[0][1] == 'up' and row >= 2):
-                row -= 1
                 tmp_direction = 'up'
             elif(sorted_LG[0][1] == 'left' and column >= 2):
-                column -= 1
                 tmp_direction = 'left'
-            if(row == 1 and column == 1):
-                print('Direction:', 'complete')
-                break
+            # print direction of current grid position as relates to
+            # the calculated next grid position
+            print('Direction:', tmp_direction)
+            self.NW_grid[row][column] = 'X'
+            if(tmp_direction == 'diagonal'):
+                row -= 1
+                column -= 1
+            elif(tmp_direction == 'up'):
+                row -= 1
             else:
-                print('Direction:', tmp_direction)
+                column -= 1
+            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
+        self.NW_grid[row][column] = 'X'
+        print('Direction:', 'complete')
+
 
     def fct_print_grid(self, arg_print_full_grid):
         ## print the grid, along with both AA values
