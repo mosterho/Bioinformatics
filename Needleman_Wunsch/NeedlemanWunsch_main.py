@@ -35,7 +35,7 @@ cls_temp = NeedlemanWunsch_create_grid.cls_NW_grid('ACTCG', 'ACAGTAG')
 fct_do_this(cls_temp)
 
 # some random sequence I created
-cls_temp = NeedlemanWunsch_create_grid.cls_NW_grid('ACTCGACAGTAGGTAGACTCGACAGACTC', 'ACAGTAGACTACAG')
+cls_temp = NeedlemanWunsch_create_grid.cls_NW_grid('ACTCGACAGTAGGTAGACTCGACAGACTC', 'ACAGTAGACTAGTAGGTAGACTCAG')
 fct_do_this(cls_temp)
 
 ## something real from NP_000007.1 and NP_00008.1

@@ -1,8 +1,12 @@
 ###
-# Needleman/Wunsch calculator - Build an empty grid based on
-# lengths of both arguments passed in, but
-# load the first row and column with negative numbers
-#
+# Needleman/Wunsch calculator -
+# NOTE: there is no "mainline" for this program
+# The following are the functions associated with this program
+# 1. Build a grid based on lengths of both arguments passed in, but
+#    load the first row and column with negative numbers
+# 2. Perform the first stage of calculating the match/mismatch/gap penalties
+# 3. Perform the reverse walk back of the grid scoring to obtain the "Best" sequence
+# 4. print the grid
 
 from operator import itemgetter, attrgetter  # use with "sorted()"
 import sys
@@ -120,7 +124,7 @@ class cls_NW_grid:
                 for column in range(self.len_aa1):
                     print('{0:>{width}}'.format(self.aa1[column], width=width), end='')
                 print(' ', end='\n')
-            ## if first column in loop and row, print single space 
+            ## if first column in loop and row, print single space
             ## if first column, but not not first row, print AA2 value,
             ## otherwise print grid values
             for column in range(self.len_aa1 + 1):
