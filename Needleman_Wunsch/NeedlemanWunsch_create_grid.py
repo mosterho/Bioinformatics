@@ -1,10 +1,14 @@
 ###
-# Needleman/Wunsch calculator - Build an empty grid based on
-# lengths of both arguments passed in, but
-# load the first row and column with negative numbers
-#
+# Needleman/Wunsch calculator -
+# NOTE: there is no "mainline" for this program
+# The following are the functions associated with this program
+# 1. Build a grid based on lengths of both arguments passed in, but
+#    load the first row and column with negative numbers
+# 2. Perform the first stage of calculating the match/mismatch/gap penalties
+# 3. Perform the reverse walk back of the grid scoring to obtain the "Best" sequence
+# 4. print the grid
 
-from operator import itemgetter, attrgetter  # use for "sorted()"
+from operator import itemgetter, attrgetter  # use with "sorted()"
 import sys
 
 class cls_NW_grid:
@@ -41,12 +45,12 @@ class cls_NW_grid:
                 diagonal_value = self.NW_grid[current_row - 1][current_column - 1]
                 top_value = self.NW_grid[current_row - 1][current_column]
                 ## compare current value of individual string location's nucleotides/AA to be compared, are they equal?
+                ## (note the use of ""- 1", because of the difference in using grid column/row versus data position)
                 if(self.aa1[current_column - 1] == self.aa2[current_row - 1]):
-                #if(str(class_NW_grid.aa1, current_column - 1, current_column) == str(class_NW_grid.aa2, current_row - 1, current_row)):
                     aa_equivalent = True
                 else:
                     aa_equivalent = False
-                ## calculate "what if" numbers based match/mismatch/gap possibilities
+                ## calculate "what if" numbers based on match/mismatch/gap possibilities
                 tmp_value = left_value - 1
                 if(top_value -1 > tmp_value):
                     tmp_value = top_value - 1
@@ -61,38 +65,68 @@ class cls_NW_grid:
     def fct_grid_walkback(self):
         ## perform the reverse of loading the grid with match/mismatch/gap numbers
         ## to find the best possible match
+        #
+        # set far-right/lower row column positions in grid
         row = self.len_aa2
         column = self.len_aa1
-        while(row > 0 and column > 0):
+        # print far-right/lower row column positions to start before loop,
+        # then set the grid position's value to 'x' (this allows printing the value rather than 'x')
+        # then start "while" loop until row=1 and column=1
+        print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
+        self.NW_grid[row][column] = 'X'
+        while(row > 1 or column > 1):
             # determine if left, diagonal or upper grid values have the highest values
-            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column])
-            self.NW_grid[row][column] = 'X'
+            ## Place grid values and their positions in a list,
+            ## then sort the list by value (descending) then position (in case the values have a tie).
             list_grid = [(self.NW_grid[row-1][column-1], 'diagonal'), (self.NW_grid[row-1][column], 'up'), (self.NW_grid[row][column-1], 'left')]
             sorted_LG = sorted(list_grid, key=itemgetter(0), reverse=True)
             sorted(sorted_LG, key=itemgetter(1))
-            ## print "sorted_LG" which basically gives instructions on going through
-            ## the grid in reverse for the best match
-            print(sorted_LG)
-            if(sorted_LG[0][1] == 'up'):
-                row -= 1
-            elif(sorted_LG[0][1] == 'diagonal'):
+            ## Test values, try to go diagonal first, then either up or left
+            ## if current AA values match, just use "diagonal" regardless of sorted value
+            if(self.aa1[column - 1] == self.aa2[row - 1] and row >= 2 and column >= 2):
+                tmp_direction = 'diagonal'
+            elif(sorted_LG[0][1] == 'diagonal' and row >= 2 and column >= 2):
+                tmp_direction = 'diagonal'
+            elif(sorted_LG[0][1] == 'up' and row >= 2):
+                tmp_direction = 'up'
+            elif(sorted_LG[0][1] == 'left' and column >= 2):
+                tmp_direction = 'left'
+            # print direction of current grid position as relates to
+            # the calculated next grid position
+            print('Direction:', tmp_direction)
+            # Set grid position value to 'X', then move to the grid location
+            # that was just calculated
+            self.NW_grid[row][column] = 'X'
+            if(tmp_direction == 'diagonal'):
                 row -= 1
                 column -= 1
+            elif(tmp_direction == 'up'):
+                row -= 1
             else:
                 column -= 1
+            # print the new/current gird location, then continue with loop
+            print('row:', row, 'column:', column, 'value:', self.NW_grid[row][column], ' ', end='')
+        # End of loop, change the current grid postion's value (should be row=1, column=1)
+        # and print "Complete"
+        self.NW_grid[row][column] = 'X'
+        print('Direction:', 'complete')
+
 
     def fct_print_grid(self, arg_print_full_grid):
         ## print the grid, along with both AA values
-        width = len(str(self.len_aa2)) + 2  ## picked +2 just for aesthetics
+        print('Print the grid, along with both AA values')
+        width = len(str(self.len_aa2)) + 2  ## picked +2 just for aesthetics for printing grid values
         for row in range(self.len_aa2 + 1):
-            ## print column first, then...
+            ## if first row, print two blank spaces, then first row of AA1, then...
             if(row == 0):
                 print('{0:>{width}}'.format(' ', width=width), end='')  #
                 print('{0:>{width}}'.format(' ', width=width), end='')  #
                 for column in range(self.len_aa1):
                     print('{0:>{width}}'.format(self.aa1[column], width=width), end='')
                 print(' ', end='\n')
-            ## ... print grid values
+            ## if first column in loop and row, print single space
+            ## if first column, but not not first row, print AA2 value,
+            ## otherwise print grid values
             for column in range(self.len_aa1 + 1):
                 if(column == 0):
                     if(row < 1):
