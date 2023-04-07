@@ -5,7 +5,7 @@ This self-assigned project is to convert the MongoDB collections in the "chrome"
 
 The first step is to select files to upload from the NCBI databases (which are zipped), FTP them to my Ubuntu (Linux) file server and then unzip them.
 
-The next step is to create BASH scripts that upload the files into mongodb databases using the "mongofiles" utility. The BASH scripts are in the 'scripts' folder.
+The next step is to create BASH scripts that upload the files into mongodb databases using the "mongofiles" utility. The BASH scripts are in the 'NCBI_upload_shellscripts' folder.
 
 Finally Python programs read the GridFS collections/chunks and create either new GridFS files/chunks or create "regular" collections in the databases, depending on the size of the data. Generally speaking, chromosomes/genomes are left as GridFS objects;  genes, rna, and protein collections are created as regular collections.
 
