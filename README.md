@@ -12,7 +12,7 @@ Finally Python programs read the GridFS collections/chunks and create either new
 ##Technical specs
 ###Programming Folder Structure
 There are seven folders:
-1. Build_collections: this contains the Python programs that create collections in the Mongo database. This works in conjunction with the BASH scripts in the 'scripts' folder.
+1. Build_collections: this contains the Python programs that create collections in the Mongo database. This works in conjunction with the BASH scripts in the 'NCBI_upload_shellscripts' folder.
 2. Find_regex_pattern_gridfs: this contains Python programs utilizing the new Mongo database collections to perform REGEX finds of nucleotide data. This is based on the "Nucleotide_search" folder (see below).
 3. HWtranslatereadingframe: this contains Perl programs, one is the original program from the Ramapo College Perl scripting class, the other is the same program modified to use a genbank file rather than a text file, and do a REGEX search that is uppercase rather than lowercase.
 4. Nucleotide_search: This contains the original self-assigned Nucleotide search programs written to perform searches using the "chrome" database from the Ramapo College Bioinformatics project.
